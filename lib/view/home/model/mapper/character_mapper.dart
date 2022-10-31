@@ -1,4 +1,4 @@
-import 'package:game_stream/models/characters/model/character_model.dart';
+import 'package:game_stream/view/home/model/character_model.dart';
 import 'package:game_stream/shared/api/models/character/get_all_characters_response.dart';
 
 extension CharactersMapper on GetAllCharactersResponse {

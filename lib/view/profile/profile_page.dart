@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:game_stream/models/characters/model/character_model.dart';
+import 'package:game_stream/view/home/model/character_model.dart';
 
 import '../home/widgets/list_tile_profile_info.dart';
 

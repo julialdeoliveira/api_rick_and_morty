@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:game_stream/view/feed/feed_page.dart';
+import 'package:game_stream/view/home/model/character_model.dart';
+
 class BottomSheetHome extends StatelessWidget {
+  final List<CharacterModel> characters;
   const BottomSheetHome({
     Key? key,
+    required this.characters,
   }) : super(key: key);
 
   @override
@@ -24,7 +29,15 @@ class BottomSheetHome extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return FeedPage(
+                    characters: characters,
+                  );
+                },
+              ));
+            },
             child: const Chip(
               label: Text(
                 'Continue',

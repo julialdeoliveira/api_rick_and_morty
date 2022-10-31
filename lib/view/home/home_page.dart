@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:game_stream/home/widgets/body_home_page.dart';
-import 'package:game_stream/home/widgets/bottom_sheet_home.dart';
+import 'package:game_stream/view/home/widgets/body_home_page.dart';
+import 'package:game_stream/view/home/widgets/bottom_sheet_home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:game_stream/shared/api/usecase/character_provider.dart';
+
 class HomePage extends ConsumerWidget {
   final TextEditingController searchController = TextEditingController();
   HomePage({super.key});
@@ -26,7 +27,9 @@ class HomePage extends ConsumerWidget {
           return const Text('...');
         },
       ),
-      bottomSheet: const BottomSheetHome(),
+      bottomSheet: BottomSheetHome(
+        characters: characters.asData!.value,
+      ),
     );
   }
 }
