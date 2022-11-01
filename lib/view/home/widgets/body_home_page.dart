@@ -20,7 +20,6 @@ class HomePageBody extends StatefulHookConsumerWidget {
 }
 
 class _HomePageBodyState extends ConsumerState<HomePageBody> {
-  bool follow = true;
   List<CharacterModel> filterText() {
     List<CharacterModel> filteredList = [];
     if (widget.searchController.text == '') {
@@ -42,9 +41,29 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
     return filteredList;
   }
 
+  List<CharacterModel> addOnFollowingOrRemoveOnFollowing() {
+    List<CharacterModel> following = [];
+    for (CharacterModel character in widget.characters) {
+      if (character.follow == false) {
+        following.add(character);
+      } else {
+        following.remove(character);
+      }
+    }
+    return following;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final filteredList = ref.watch(listCharacters.state).state;
+    final filteredList = ref.watch(listCharactersProvider.state).state;
+
+    void followOrUnfollow(int id) {
+      for (CharacterModel character in widget.characters) {
+        if (character.id == id) {
+          character.follow = !character.follow;
+        }
+      }
+    }
 
     return SafeArea(
       child: Column(
@@ -75,7 +94,7 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
               ),
               onChanged: (value) {
                 setState(() {
-                  ref.read(listCharacters.state).state = filterText();
+                  ref.read(listCharactersProvider.state).state = filterText();
                 });
               },
             ),
@@ -121,26 +140,26 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
                       ),
                       trailing: InkWell(
                         onTap: () {
-                          setState(() {
-                            follow = !follow;
-                          });
+                          followOrUnfollow(filteredList[index].id);
+                          ref.read(listFollowingProvider.state).state =
+                              addOnFollowingOrRemoveOnFollowing();
+                          setState(() {});
                         },
                         child: Chip(
-                          key: Key([index].toString()),
-                          side: !follow
+                          side: !filteredList[index].follow
                               ? const BorderSide(
                                   color: Color.fromRGBO(105, 73, 255, 1),
                                 )
                               : null,
                           label: Text(
-                            follow ? 'Follow' : 'Unfollow',
+                            filteredList[index].follow ? 'Follow' : 'Unfollow',
                             style: TextStyle(
-                                color: follow
+                                color: filteredList[index].follow
                                     ? Colors.white
                                     : const Color.fromRGBO(105, 73, 255, 1)),
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          backgroundColor: follow
+                          backgroundColor: filteredList[index].follow
                               ? const Color.fromRGBO(105, 73, 255, 1)
                               : Colors.white,
                         ),

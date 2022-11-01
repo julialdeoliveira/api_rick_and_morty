@@ -11,6 +11,7 @@ class CharacterModel {
   final List<String> episode;
   final String url;
   final String created;
+  bool follow = true;
   CharacterModel({
     required this.id,
     required this.name,

@@ -22,7 +22,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: characters.when(
         data: (data) {
           Future.delayed(Duration.zero, () {
-            ref.read(listCharacters.state).state = characters.asData!.value;
+            ref.read(listCharactersProvider.state).state =
+                characters.asData!.value;
           });
           return HomePageBody(
             searchController: widget.searchController,
