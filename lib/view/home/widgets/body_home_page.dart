@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/view/home/providers/list_characters.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../model/character_model.dart';
 import '../../profile/profile_page.dart';
 
-class HomePageBody extends StatefulWidget {
+class HomePageBody extends StatefulHookConsumerWidget {
   final List<CharacterModel> characters;
   const HomePageBody({
     Key? key,
@@ -14,13 +16,36 @@ class HomePageBody extends StatefulWidget {
   final TextEditingController searchController;
 
   @override
-  State<HomePageBody> createState() => _HomePageBodyState();
+  ConsumerState<HomePageBody> createState() => _HomePageBodyState();
 }
 
-class _HomePageBodyState extends State<HomePageBody> {
+class _HomePageBodyState extends ConsumerState<HomePageBody> {
   bool follow = true;
+  List<CharacterModel> filterText() {
+    List<CharacterModel> filteredList = [];
+    if (widget.searchController.text == '') {
+      return widget.characters;
+    } else if (widget.searchController.text.isNotEmpty) {
+      for (CharacterModel character in widget.characters) {
+        if (character.name
+            .toLowerCase()
+            .contains(widget.searchController.text.toLowerCase())) {
+          filteredList.add(character);
+        }
+        if (character.species
+            .toLowerCase()
+            .contains(widget.searchController.text.toLowerCase())) {
+          filteredList.add(character);
+        }
+      }
+    }
+    return filteredList;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final filteredList = ref.watch(listCharacters.state).state;
+
     return SafeArea(
       child: Column(
         children: [
@@ -48,6 +73,11 @@ class _HomePageBodyState extends State<HomePageBody> {
                 filled: true,
                 fillColor: Colors.grey.shade300,
               ),
+              onChanged: (value) {
+                setState(() {
+                  ref.read(listCharacters.state).state = filterText();
+                });
+              },
             ),
           ),
           const Text(
@@ -69,7 +99,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 20),
               scrollDirection: Axis.vertical,
-              itemCount: widget.characters.length,
+              itemCount: filteredList.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -77,18 +107,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) {
-                          return ProfilePage(
-                              character: widget.characters[index]);
+                          return ProfilePage(character: filteredList[index]);
                         },
                       ));
                     },
                     child: ListTile(
-                      title: Text(widget.characters[index].name),
-                      subtitle: Text(widget.characters[index].species),
+                      title: Text(filteredList[index].name),
+                      subtitle: Text(filteredList[index].species),
                       leading: CircleAvatar(
                         radius: 30,
                         backgroundImage:
-                            NetworkImage(widget.characters[index].image),
+                            NetworkImage(filteredList[index].image),
                       ),
                       trailing: InkWell(
                         onTap: () {

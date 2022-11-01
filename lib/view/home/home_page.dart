@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/view/home/providers/list_characters.dart';
 import 'package:game_stream/view/home/widgets/body_home_page.dart';
 import 'package:game_stream/view/home/widgets/bottom_sheet_home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:game_stream/shared/api/usecase/character_provider.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends StatefulHookConsumerWidget {
   final TextEditingController searchController = TextEditingController();
   HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  Widget build(BuildContext context) {
     var characters = ref.watch(characterProvider);
     return Scaffold(
       body: characters.when(
         data: (data) {
+          Future.delayed(Duration.zero, () {
+            ref.read(listCharacters.state).state = characters.asData!.value;
+          });
           return HomePageBody(
-            searchController: searchController,
+            searchController: widget.searchController,
             characters: characters.asData!.value,
           );
         },
