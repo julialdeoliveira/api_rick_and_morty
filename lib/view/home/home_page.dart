@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:game_stream/shared/api/usecase/character_provider.dart';
 
 class HomePage extends StatefulHookConsumerWidget {
+  static const route = "/home";
   final TextEditingController searchController = TextEditingController();
   HomePage({super.key});
 
@@ -34,7 +35,9 @@ class _HomePageState extends ConsumerState<HomePage> {
           return Text('Deu erro $error');
         },
         loading: () {
-          return const Text('...');
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
       bottomSheet: BottomSheetHome(

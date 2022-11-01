@@ -32,9 +32,7 @@ class BottomSheetHome extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
-                  return FeedPage(
-                    characters: characters,
-                  );
+                  return const FeedPage();
                 },
               ));
             },

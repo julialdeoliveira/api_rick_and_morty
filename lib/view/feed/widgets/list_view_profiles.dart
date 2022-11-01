@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../home/model/character_model.dart';
 
 class ListViewProfiles extends StatelessWidget {
   const ListViewProfiles({
@@ -9,7 +6,7 @@ class ListViewProfiles extends StatelessWidget {
     required this.characters,
   }) : super(key: key);
 
-  final List<CharacterModel> characters;
+  final List<dynamic> characters;
 
   @override
   Widget build(BuildContext context) {
@@ -17,41 +14,47 @@ class ListViewProfiles extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: characters.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Container(
-                    height: 120,
-                    width: 120,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        gradient: const LinearGradient(colors: [
-                          Colors.pink,
-                          Color.fromRGBO(105, 73, 255, 1),
-                        ])),
-                  ),
-                  const CircleAvatar(
-                    radius: 52,
-                    backgroundColor: Colors.white,
-                  ),
-                  CircleAvatar(
-                    radius: 50,
-                    child: ClipOval(
-                      child: Image.network(
-                        characters[index].image,
-                        fit: BoxFit.cover,
+        return InkWell(
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed("/status", arguments: characters[index]);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Container(
+                      height: 120,
+                      width: 120,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          gradient: const LinearGradient(colors: [
+                            Colors.pink,
+                            Color.fromRGBO(105, 73, 255, 1),
+                          ])),
+                    ),
+                    const CircleAvatar(
+                      radius: 52,
+                      backgroundColor: Colors.white,
+                    ),
+                    CircleAvatar(
+                      radius: 50,
+                      child: ClipOval(
+                        child: Image.network(
+                          characters[index].image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(characters[index].name),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(characters[index].name),
+              ],
+            ),
           ),
         );
       },

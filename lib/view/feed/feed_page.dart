@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/shared/templates/custom_navigation_bar.dart';
 import 'package:game_stream/view/feed/widgets/list_view_profiles.dart';
 
-import 'package:game_stream/view/home/model/character_model.dart';
+import 'package:game_stream/view/home/providers/list_characters.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class FeedPage extends StatelessWidget {
-  final List<CharacterModel> characters;
+import '../../shared/templates/list_view_posts.dart';
+
+class FeedPage extends StatefulHookConsumerWidget {
+  static const route = "/feed";
   const FeedPage({
     Key? key,
-    required this.characters,
   }) : super(key: key);
 
   @override
+  ConsumerState<FeedPage> createState() => _FeedPageState();
+}
+
+class _FeedPageState extends ConsumerState<FeedPage> {
+  @override
   Widget build(BuildContext context) {
+    final characters = ref.watch(listFollowingProvider.state).state;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profiles'),
+        automaticallyImplyLeading: false,
+        title: const Text('Feed'),
       ),
       body: SafeArea(
         child: Column(
@@ -25,61 +36,12 @@ class FeedPage extends StatelessWidget {
             ),
             const Divider(),
             Flexible(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: characters.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    NetworkImage(characters[index].image),
-                              ),
-                              const SizedBox(width: 20),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(characters[index].name),
-                                  Text(characters[index].location["name"]),
-                                ],
-                              ),
-                              const Spacer(),
-                              const Icon(Icons.more_vert),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Image.network(
-                        characters[index].image,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.favorite_outline),
-                            Icon(Icons.mode_comment_outlined),
-                            Icon(Icons.send_outlined),
-                            Spacer(),
-                            Icon(Icons.bookmark_outline),
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                },
-              ),
+              child: ListViewPosts(characters: characters),
             )
           ],
         ),
       ),
+      bottomNavigationBar: const CustomNavigationBar(index: 1),
     );
   }
 }

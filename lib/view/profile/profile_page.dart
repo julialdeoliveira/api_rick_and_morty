@@ -5,6 +5,7 @@ import 'package:game_stream/view/home/model/character_model.dart';
 import '../home/widgets/list_tile_profile_info.dart';
 
 class ProfilePage extends StatelessWidget {
+  static const route = "/profiles";
   final CharacterModel character;
   const ProfilePage({
     Key? key,

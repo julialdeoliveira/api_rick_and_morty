@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/view/generate_routes.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'view/home/home_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -18,7 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      onGenerateRoute: GenerateRoute.findRoute,
+      initialRoute: "/home",
     );
   }
 }
