@@ -12,6 +12,8 @@ class CharacterModel {
   final String url;
   final String created;
   bool follow = true;
+  bool isSaved = false;
+  bool isFavorite = false;
   CharacterModel({
     required this.id,
     required this.name,

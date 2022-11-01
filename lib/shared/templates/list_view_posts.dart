@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/view/home/model/character_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../view/feed/providers/providers.dart';
@@ -16,20 +17,32 @@ class ListViewPosts extends StatefulHookConsumerWidget {
 }
 
 class _ListViewPostsState extends ConsumerState<ListViewPosts> {
-  late List<dynamic> savedPosts;
-  void addOrRemoveFromFavorites(int index, int id) {
-    if (savedPosts[index].id != id) {
-      savedPosts.add(widget.characters[index]);
+  List<CharacterModel> addOrRemoveFromFavorites() {
+    List<CharacterModel> likedPosts = [];
+    for (CharacterModel character in widget.characters) {
+      if (character.isFavorite) {
+        likedPosts.add(character);
+      } else {
+        likedPosts.remove(character);
+      }
     }
-    savedPosts.remove(widget.characters[index]);
+    return likedPosts;
+  }
+
+  List<CharacterModel> addOrRemoveFromSavedItems() {
+    List<CharacterModel> savedPosts = [];
+    for (CharacterModel character in widget.characters) {
+      if (character.isSaved) {
+        savedPosts.add(character);
+      } else {
+        savedPosts.remove(character);
+      }
+    }
+    return savedPosts;
   }
 
   @override
   Widget build(BuildContext context) {
-    final likedPosts = ref.read(likedPostsProvider.state).state;
-    savedPosts = ref.read(savedPostsProvider.state).state;
-    var isSaved = ref.read(isSavedProvider.state);
-    var isFavorite = ref.read(isFavoriteProvider.state);
     return ListView.builder(
       scrollDirection: Axis.vertical,
       itemCount: widget.characters.length,
@@ -74,13 +87,19 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
               children: [
                 IconButton(
                   onPressed: () {
-                    isFavorite.state = !isFavorite.state;
-                    likedPosts.add(widget.characters[index]);
+                    widget.characters[index].isFavorite =
+                        !widget.characters[index].isFavorite;
+                    ref.read(likedPostsProvider.state).state =
+                        addOrRemoveFromFavorites();
                     setState(() {});
                   },
                   icon: Icon(
-                    isFavorite.state ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite.state ? Colors.pink : null,
+                    widget.characters[index].isFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: widget.characters[index].isFavorite
+                        ? Colors.pink
+                        : null,
                   ),
                 ),
                 IconButton(
@@ -94,13 +113,16 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
                 const Spacer(),
                 IconButton(
                   onPressed: () {
-                    isSaved.state = !isSaved.state;
-                    addOrRemoveFromFavorites(
-                        index, widget.characters[index].id);
+                    widget.characters[index].isSaved =
+                        !widget.characters[index].isSaved;
+                    ref.read(savedPostsProvider.state).state =
+                        addOrRemoveFromSavedItems();
                     setState(() {});
                   },
                   icon: Icon(
-                    isSaved.state ? Icons.bookmark : Icons.bookmark_border,
+                    widget.characters[index].isSaved
+                        ? Icons.bookmark
+                        : Icons.bookmark_border,
                   ),
                 ),
               ],
