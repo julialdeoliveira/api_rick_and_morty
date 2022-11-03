@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:game_stream/view/home/widgets/column_texts.dart';
-import 'package:game_stream/view/home/widgets/list_view_search.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:game_stream/view/home/providers/list_characters.dart';
+import 'package:game_stream/view/home/widgets/column_texts.dart';
+import 'package:game_stream/view/home/widgets/list_view_search.dart';
 
+import '../../../shared/templates/search_text_form_field.dart';
 import '../model/character_model.dart';
 
 class HomePageBody extends StatefulHookConsumerWidget {
@@ -22,27 +23,6 @@ class HomePageBody extends StatefulHookConsumerWidget {
 }
 
 class _HomePageBodyState extends ConsumerState<HomePageBody> {
-  List<CharacterModel> filterText() {
-    List<CharacterModel> filteredList = [];
-    if (widget.searchController.text == '') {
-      return widget.characters;
-    } else if (widget.searchController.text.isNotEmpty) {
-      for (CharacterModel character in widget.characters) {
-        if (character.name
-            .toLowerCase()
-            .contains(widget.searchController.text.toLowerCase())) {
-          filteredList.add(character);
-        }
-        if (character.species
-            .toLowerCase()
-            .contains(widget.searchController.text.toLowerCase())) {
-          filteredList.add(character);
-        }
-      }
-    }
-    return filteredList;
-  }
-
   @override
   Widget build(BuildContext context) {
     final filteredList = ref.watch(listCharactersProvider.state).state;
@@ -52,33 +32,9 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: TextFormField(
-              controller: widget.searchController,
-              decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: const Icon(
-                  Icons.search,
-                ),
-                suffixIcon: const Icon(
-                  Icons.mic,
-                  color: Colors.indigo,
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 0)),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 0)),
-                filled: true,
-                fillColor: Colors.grey.shade300,
-              ),
-              onChanged: (value) {
-                setState(() {
-                  ref.read(listCharactersProvider.state).state = filterText();
-                });
-              },
+            child: SearchTextFormField(
+              searchController: widget.searchController,
+              characters: widget.characters,
             ),
           ),
           const ColumnText(),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:game_stream/view/home/model/character_model.dart';
 import 'package:game_stream/view/status/widgets/container_bottom_sheet.dart';
 import 'package:game_stream/view/status/widgets/ink_well_post_status.dart';
 import 'package:game_stream/view/status/widgets/row_info_status.dart';
 
-class StatusPage extends StatefulWidget {
+import '../home/model/character_model.dart';
+
+class StatusPage extends StatelessWidget {
   static const route = "/status";
   final CharacterModel character;
   const StatusPage({
@@ -13,11 +14,6 @@ class StatusPage extends StatefulWidget {
     required this.character,
   }) : super(key: key);
 
-  @override
-  State<StatusPage> createState() => _StatusPageState();
-}
-
-class _StatusPageState extends State<StatusPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +31,12 @@ class _StatusPageState extends State<StatusPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: RowInfoStatus(
-                  character: widget.character,
+                  character: character,
                 ),
               ),
               const SizedBox(height: 100),
               PostStatusInkWell(
-                character: widget.character,
+                character: character,
               ),
             ],
           ),

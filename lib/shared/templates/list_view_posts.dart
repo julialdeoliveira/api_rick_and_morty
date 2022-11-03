@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_stream/shared/templates/row_profile_info.dart';
+import 'package:game_stream/shared/templates/search_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:game_stream/view/home/model/character_model.dart';
@@ -7,12 +8,13 @@ import 'package:game_stream/view/home/model/character_model.dart';
 import '../../view/feed/providers/providers.dart';
 
 class ListViewPosts extends StatefulHookConsumerWidget {
-  const ListViewPosts({
+  ListViewPosts({
     Key? key,
     required this.characters,
   }) : super(key: key);
 
-  final List characters;
+  final List<CharacterModel> characters;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   ConsumerState<ListViewPosts> createState() => _ListViewPostsState();
@@ -93,7 +95,74 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
                   icon: const Icon(Icons.mode_comment_outlined),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return SizedBox(
+                          height: 1000,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                            ),
+                            child: Column(
+                              children: [
+                                const Icon(Icons.minimize),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              widget.characters[index].image),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text('Write a message...'),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                SearchTextFormField(
+                                  searchController: widget.searchController,
+                                  characters: widget.characters,
+                                ),
+                                Expanded(
+                                    child: ListView.builder(
+                                  itemCount: widget.characters.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      minVerticalPadding: 30,
+                                      leading: CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: NetworkImage(
+                                            widget.characters[index].image),
+                                      ),
+                                      title:
+                                          Text(widget.characters[index].name),
+                                      trailing: const Chip(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        backgroundColor:
+                                            Color.fromRGBO(105, 73, 255, 1),
+                                        label: Text(
+                                          'Send',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ))
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                   icon: const Icon(Icons.send_outlined),
                 ),
                 const Spacer(),
