@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_stream/shared/templates/custom_navigation_bar.dart';
+import 'package:game_stream/view/feed/widgets/app_bar_feed.dart';
 import 'package:game_stream/view/feed/widgets/list_view_profiles.dart';
 
 import 'package:game_stream/view/home/providers/list_characters.dart';
@@ -23,25 +24,12 @@ class _FeedPageState extends ConsumerState<FeedPage> {
     final characters = ref.watch(listFollowingProvider.state).state;
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Feed'),
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/home");
-                },
-                icon: const Icon(Icons.search))
-          ],
-        ),
-      ),
+      appBar: const AppBarFeed(),
       body: SafeArea(
         child: Column(
           children: [
             SizedBox(
-              height: 170,
+              height: 120,
               child: ListViewProfiles(characters: characters),
             ),
             const Divider(),

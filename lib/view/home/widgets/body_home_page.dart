@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:game_stream/view/home/providers/list_characters.dart';
+import 'package:game_stream/view/home/widgets/column_texts.dart';
+import 'package:game_stream/view/home/widgets/list_view_search.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:game_stream/view/home/providers/list_characters.dart';
+
 import '../model/character_model.dart';
-import '../../profile/profile_page.dart';
 
 class HomePageBody extends StatefulHookConsumerWidget {
   final List<CharacterModel> characters;
@@ -41,29 +43,9 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
     return filteredList;
   }
 
-  List<CharacterModel> addOnFollowingOrRemoveOnFollowing() {
-    List<CharacterModel> following = [];
-    for (CharacterModel character in widget.characters) {
-      if (character.follow == false) {
-        following.add(character);
-      } else {
-        following.remove(character);
-      }
-    }
-    return following;
-  }
-
   @override
   Widget build(BuildContext context) {
     final filteredList = ref.watch(listCharactersProvider.state).state;
-
-    void followOrUnfollow(int id) {
-      for (CharacterModel character in widget.characters) {
-        if (character.id == id) {
-          character.follow = !character.follow;
-        }
-      }
-    }
 
     return SafeArea(
       child: Column(
@@ -99,77 +81,11 @@ class _HomePageBodyState extends ConsumerState<HomePageBody> {
               },
             ),
           ),
-          const Text(
-            'Select some accounts to follow',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              'Follow some people  that you  \n may know below',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          const ColumnText(),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(bottom: 20),
-              scrollDirection: Axis.vertical,
-              itemCount: filteredList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return ProfilePage(character: filteredList[index]);
-                        },
-                      ));
-                    },
-                    child: ListTile(
-                      title: Text(filteredList[index].name),
-                      subtitle: Text(filteredList[index].species),
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            NetworkImage(filteredList[index].image),
-                      ),
-                      trailing: InkWell(
-                        onTap: () {
-                          followOrUnfollow(filteredList[index].id);
-                          ref.read(listFollowingProvider.state).state =
-                              addOnFollowingOrRemoveOnFollowing();
-                          setState(() {});
-                        },
-                        child: Chip(
-                          side: !filteredList[index].follow
-                              ? const BorderSide(
-                                  color: Color.fromRGBO(105, 73, 255, 1),
-                                )
-                              : null,
-                          label: Text(
-                            filteredList[index].follow ? 'Follow' : 'Unfollow',
-                            style: TextStyle(
-                                color: filteredList[index].follow
-                                    ? Colors.white
-                                    : const Color.fromRGBO(105, 73, 255, 1)),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          backgroundColor: filteredList[index].follow
-                              ? const Color.fromRGBO(105, 73, 255, 1)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+              child: ListViewSearch(
+            characters: filteredList,
+          )),
         ],
       ),
     );

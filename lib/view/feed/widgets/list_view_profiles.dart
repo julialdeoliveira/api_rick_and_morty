@@ -18,6 +18,7 @@ class ListViewProfiles extends StatelessWidget {
           onTap: () {
             Navigator.of(context)
                 .pushNamed("/status", arguments: characters[index]);
+            characters[index].isStatusViewd = !characters[index].isStatusViewd;
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -27,21 +28,26 @@ class ListViewProfiles extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      height: 120,
-                      width: 120,
+                      height: 80,
+                      width: 80,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          gradient: const LinearGradient(colors: [
-                            Colors.pink,
-                            Color.fromRGBO(105, 73, 255, 1),
-                          ])),
+                          color: characters[index].isStatusViewd == true
+                              ? Colors.black
+                              : null,
+                          gradient: characters[index].isStatusViewd == false
+                              ? const LinearGradient(colors: [
+                                  Colors.pink,
+                                  Color.fromRGBO(105, 73, 255, 1),
+                                ])
+                              : null),
                     ),
                     const CircleAvatar(
-                      radius: 52,
+                      radius: 35,
                       backgroundColor: Colors.white,
                     ),
                     CircleAvatar(
-                      radius: 50,
+                      radius: 30,
                       child: ClipOval(
                         child: Image.network(
                           characters[index].image,
@@ -51,7 +57,7 @@ class ListViewProfiles extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 2),
                 Text(characters[index].name),
               ],
             ),

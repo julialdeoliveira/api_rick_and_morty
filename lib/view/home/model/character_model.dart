@@ -14,6 +14,7 @@ class CharacterModel {
   bool follow = true;
   bool isSaved = false;
   bool isFavorite = false;
+  bool isStatusViewd = false;
   CharacterModel({
     required this.id,
     required this.name,

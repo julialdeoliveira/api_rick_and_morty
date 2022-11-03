@@ -23,12 +23,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: characters.when(
         data: (data) {
           Future.delayed(Duration.zero, () {
-            ref.read(listCharactersProvider.state).state =
-                characters.asData!.value;
+            ref.read(listCharactersProvider.state).state = data;
           });
           return HomePageBody(
             searchController: widget.searchController,
-            characters: characters.asData!.value,
+            characters: data,
           );
         },
         error: (error, stackTrace) {
@@ -41,7 +40,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         },
       ),
       bottomSheet: BottomSheetHome(
-        characters: characters.asData!.value,
+        searchController: widget.searchController,
       ),
     );
   }
