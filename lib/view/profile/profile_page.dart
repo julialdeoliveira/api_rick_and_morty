@@ -29,13 +29,16 @@ class ProfilePage extends StatelessWidget {
                 ListTileProfileInfo(
                   title: 'Gender',
                   subtile: character.gender,
-                  iconData: Icons.male,
+                  iconData:
+                      character.gender == "Male" ? Icons.male : Icons.female,
                 ),
                 const Divider(),
                 ListTileProfileInfo(
                   title: 'Status',
                   subtile: character.status,
                   iconData: Icons.favorite,
+                  iconColor:
+                      character.status == 'Alive' ? Colors.red : Colors.grey,
                 ),
                 const Divider(),
                 ListTileProfileInfo(

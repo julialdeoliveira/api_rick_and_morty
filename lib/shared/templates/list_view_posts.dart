@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:game_stream/view/home/model/character_model.dart';
+import 'package:game_stream/shared/templates/row_profile_info.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'package:game_stream/view/home/model/character_model.dart';
 
 import '../../view/feed/providers/providers.dart';
 
@@ -58,24 +60,8 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
                     Navigator.of(context).pushNamed("/profiles",
                         arguments: widget.characters[index]);
                   },
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage:
-                            NetworkImage(widget.characters[index].image),
-                      ),
-                      const SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.characters[index].name),
-                          Text(widget.characters[index].location["name"]),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.more_vert),
-                    ],
+                  child: RowProfileInfo(
+                    character: widget.characters[index],
                   ),
                 ),
               ),

@@ -25,7 +25,17 @@ class _FeedPageState extends ConsumerState<FeedPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Feed'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Feed'),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/home");
+                },
+                icon: const Icon(Icons.search))
+          ],
+        ),
       ),
       body: SafeArea(
         child: Column(

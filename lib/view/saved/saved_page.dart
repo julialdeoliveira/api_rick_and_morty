@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_stream/shared/templates/custom_navigation_bar.dart';
+import 'package:game_stream/shared/templates/replacement_if_list_is_empty.dart';
 import 'package:game_stream/view/feed/providers/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -24,10 +25,15 @@ class _SavedPageState extends ConsumerState<SavedPage> {
       ),
       body: Column(
         children: [
-          Expanded(
+          Visibility(
+            visible: savedItems.isNotEmpty,
+            replacement: const ReplacementIfListIsEmpty(),
+            child: Expanded(
               child: ListViewPosts(
-            characters: savedItems,
-          ))
+                characters: savedItems,
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: const CustomNavigationBar(index: 2),
