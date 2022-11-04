@@ -31,16 +31,12 @@ class ListViewProfiles extends StatelessWidget {
                       height: 80,
                       width: 80,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: characters[index].isStatusViewd == true
-                              ? Colors.black
-                              : null,
-                          gradient: characters[index].isStatusViewd == false
-                              ? const LinearGradient(colors: [
-                                  Colors.pink,
-                                  Color.fromRGBO(105, 73, 255, 1),
-                                ])
-                              : null),
+                        borderRadius: BorderRadius.circular(100),
+                        gradient: const LinearGradient(colors: [
+                          Colors.pink,
+                          Color.fromRGBO(105, 73, 255, 1),
+                        ]),
+                      ),
                     ),
                     const CircleAvatar(
                       radius: 35,
