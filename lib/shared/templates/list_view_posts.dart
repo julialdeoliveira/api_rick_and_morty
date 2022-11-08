@@ -54,17 +54,14 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushNamed("/profiles",
-                        arguments: widget.characters[index]);
-                  },
-                  child: RowProfileInfo(
-                    character: widget.characters[index],
-                  ),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed("/profiles",
+                      arguments: widget.characters[index]);
+                },
+                child: RowProfileInfo(
+                  character: widget.characters[index],
                 ),
               ),
             ),
@@ -74,6 +71,7 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
             Row(
               children: [
                 IconButton(
+                  key: const Key('Icon_favorite'),
                   onPressed: () {
                     widget.characters[index].isFavorite =
                         !widget.characters[index].isFavorite;
@@ -91,6 +89,7 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
                   ),
                 ),
                 IconButton(
+                  key: const Key('Icon_comment'),
                   onPressed: () {},
                   icon: const Icon(Icons.mode_comment_outlined),
                 ),
@@ -167,6 +166,7 @@ class _ListViewPostsState extends ConsumerState<ListViewPosts> {
                 ),
                 const Spacer(),
                 IconButton(
+                  key: const Key('Icon_bookmark'),
                   onPressed: () {
                     widget.characters[index].isSaved =
                         !widget.characters[index].isSaved;

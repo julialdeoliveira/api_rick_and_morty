@@ -5,7 +5,7 @@ import '../model/character_model.dart';
 import '../providers/list_characters.dart';
 
 class ListViewSearch extends StatefulHookConsumerWidget {
-  final List<dynamic> characters;
+  final List<CharacterModel> characters;
   const ListViewSearch({
     Key? key,
     required this.characters,

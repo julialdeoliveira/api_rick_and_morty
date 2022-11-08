@@ -11,7 +11,7 @@ final characterProviderUsecase = Provider(
   },
 );
 
-final characterProvider = FutureProvider<List<CharacterModel>>(
+final charactersProvider = FutureProvider<List<CharacterModel>>(
   (ref) {
     return ref.read(characterProviderUsecase).execute();
   },

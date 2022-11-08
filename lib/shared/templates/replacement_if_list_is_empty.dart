@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReplacementIfListIsEmpty extends StatelessWidget {
-  const ReplacementIfListIsEmpty({
-    Key? key,
-  }) : super(key: key);
+  const ReplacementIfListIsEmpty({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +9,10 @@ class ReplacementIfListIsEmpty extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 100),
       child: Column(
         children: [
-          Image.asset("lib/assets/images/undraw_feeling_blue_4b7q.png"),
+          Image.asset(
+            "lib/assets/images/undraw_feeling_blue_4b7q.png",
+            width: 200,
+          ),
           Text(
             'Looks like you have \nnothing here',
             textAlign: TextAlign.center,

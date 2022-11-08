@@ -7,9 +7,9 @@ import 'package:game_stream/view/saved/saved_page.dart';
 class CustomNavigationBar extends StatefulWidget {
   final int index;
   const CustomNavigationBar({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();

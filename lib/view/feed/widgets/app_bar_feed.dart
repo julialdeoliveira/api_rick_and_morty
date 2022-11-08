@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppBarFeed extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarFeed({
-    Key? key,
-  }) : super(key: key);
+  const AppBarFeed({super.key});
 
   @override
   Size get preferredSize => const Size(double.maxFinite, 56);

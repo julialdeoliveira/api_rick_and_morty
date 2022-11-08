@@ -18,7 +18,7 @@ class HomePage extends StatefulHookConsumerWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    var characters = ref.watch(characterProvider);
+    var characters = ref.watch(charactersProvider);
     return Scaffold(
       body: characters.when(
         data: (data) {
