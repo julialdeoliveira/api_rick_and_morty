@@ -18,7 +18,8 @@ class LikedPage extends StatefulHookConsumerWidget {
 class _LikedPageState extends ConsumerState<LikedPage> {
   @override
   Widget build(BuildContext context) {
-    final likedItems = ref.watch(likedPostsProvider.state).state;
+    final List<CharacterModel> likedItems =
+        ref.watch(likedPostsProvider.state).state;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -31,7 +32,7 @@ class _LikedPageState extends ConsumerState<LikedPage> {
             replacement: const ReplacementIfListIsEmpty(),
             child: Expanded(
               child: ListViewPosts(
-                characters: likedItems as List<CharacterModel>,
+                characters: likedItems,
               ),
             ),
           ),

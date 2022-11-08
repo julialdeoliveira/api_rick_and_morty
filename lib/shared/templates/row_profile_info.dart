@@ -4,6 +4,7 @@ import '../../view/home/model/character_model.dart';
 
 class RowProfileInfo extends StatelessWidget {
   final CharacterModel character;
+
   const RowProfileInfo({
     Key? key,
     required this.character,
@@ -22,7 +23,7 @@ class RowProfileInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(character.name),
-            Text(character.location["name"]),
+            Text(character.location.name),
           ],
         ),
         const Spacer(),

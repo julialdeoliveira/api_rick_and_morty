@@ -15,8 +15,10 @@ CharacterResultResponse _$CharacterResultResponseFromJson(
       json['species'] as String,
       json['type'] as String,
       json['gender'] as String,
-      json['origin'] as Map<String, dynamic>,
-      json['location'] as Map<String, dynamic>,
+      CharacterLocationResponse.fromJson(
+          json['origin'] as Map<String, dynamic>),
+      CharacterLocationResponse.fromJson(
+          json['location'] as Map<String, dynamic>),
       json['image'] as String,
       (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
       json['url'] as String,

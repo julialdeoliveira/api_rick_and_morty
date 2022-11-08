@@ -43,13 +43,13 @@ class ProfilePage extends StatelessWidget {
                 const Divider(),
                 ListTileProfileInfo(
                   title: 'Planet',
-                  subtile: character.origin["name"],
+                  subtile: character.origin.name,
                   iconData: Icons.public_off,
                 ),
                 const Divider(),
                 ListTileProfileInfo(
                   title: 'Location',
-                  subtile: character.location["name"],
+                  subtile: character.location.name,
                   iconData: Icons.location_on,
                 ),
               ],

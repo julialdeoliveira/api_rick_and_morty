@@ -1,3 +1,4 @@
+import 'package:game_stream/shared/api/models/character/character_location_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'character_result_response.g.dart';
@@ -10,8 +11,8 @@ class CharacterResultResponse {
   final String species;
   final String type;
   final String gender;
-  final Map<String, dynamic> origin;
-  final Map<String, dynamic> location;
+  final CharacterLocationResponse origin;
+  final CharacterLocationResponse location;
   final String image;
   final List<String> episode;
   final String url;

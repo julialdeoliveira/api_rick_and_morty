@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_stream/view/home/model/character_model.dart';
 
 class ListViewProfiles extends StatelessWidget {
   const ListViewProfiles({
@@ -6,7 +7,7 @@ class ListViewProfiles extends StatelessWidget {
     required this.characters,
   }) : super(key: key);
 
-  final List<dynamic> characters;
+  final List<CharacterModel> characters;
 
   @override
   Widget build(BuildContext context) {

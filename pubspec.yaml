@@ -43,10 +43,14 @@ dependencies:
   hooks_riverpod: ^2.0.2
   dio: ^4.0.6
   auto_size_text: ^3.0.0
+  network_image_mock: ^2.1.1
+  faker: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
