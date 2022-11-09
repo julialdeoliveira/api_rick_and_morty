@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ContainerBottomSheetStatus extends StatefulWidget {
-  ContainerBottomSheetStatus({
+  const ContainerBottomSheetStatus({
     Key? key,
   }) : super(key: key);
-  bool isFavorite = false;
+
   @override
   State<ContainerBottomSheetStatus> createState() =>
       _ContainerBottomSheetStatusState();
@@ -12,6 +12,7 @@ class ContainerBottomSheetStatus extends StatefulWidget {
 
 class _ContainerBottomSheetStatusState
     extends State<ContainerBottomSheetStatus> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,11 +41,11 @@ class _ContainerBottomSheetStatusState
           ),
           IconButton(
             onPressed: () {
-              widget.isFavorite = !widget.isFavorite;
+              isFavorite = !isFavorite;
               setState(() {});
             },
             icon: Icon(Icons.favorite,
-                color: widget.isFavorite ? Colors.pink : Colors.white),
+                color: isFavorite ? Colors.pink : Colors.white),
           ),
           const Icon(
             Icons.send,

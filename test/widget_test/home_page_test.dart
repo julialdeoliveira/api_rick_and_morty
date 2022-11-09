@@ -60,6 +60,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
+
+    expect(find.text('Feed'), findsOneWidget);
   });
 }
 

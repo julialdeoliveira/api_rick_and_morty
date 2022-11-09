@@ -42,7 +42,7 @@ class StatusPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: ContainerBottomSheetStatus(),
+      bottomSheet: const ContainerBottomSheetStatus(),
     );
   }
 }
