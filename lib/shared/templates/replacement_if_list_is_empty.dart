@@ -11,7 +11,7 @@ class ReplacementIfListIsEmpty extends StatelessWidget {
         children: [
           Image.asset(
             "lib/assets/images/undraw_feeling_blue_4b7q.png",
-            width: 200,
+            width: double.maxFinite,
           ),
           Text(
             'Looks like you have \nnothing here',
